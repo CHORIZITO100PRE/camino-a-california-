@@ -4,36 +4,39 @@ function Player_free()
 
 if on_ground//>> si estoy en el piso 
   {
-    if key_horizontal == 0// hsp == 0	 	//>> si no me estoy moviendo
-	{	
+    
 	
-	 str_state = "idle";
-	 Set_sprite(s_slima_idle,1,0)	 	 
-	}  else //>> si me estoy moviendo
-	  {		 
-	    if  key_horizontal != image_xscale //>>> si mi direccion no es igual a mis teclas direccionales
-	        {	
-		//_control = character.not_move
-			Set_sprite(s_slima_turn,1,0) 
-			state = slima.turn;		
-		    } else
-			    {	//index_run = noone 
-					//if index_run != noone {index_run = 2 } else index_run = 1;
-					var _frame_loop = 2;
-			   		str_state = "run"; Set_sprite(s_slima_run,1,image_index) 
-					if Animation_end() {image_index = _frame_loop}	
-					
-				if key_dash //>> si estoy corriendo y presiono la tecla para dashear 	
-					{
-					 move_distance_remaining = distance_dash if image_xscale == 1 {direction = 0}else direction = 180; 
-					 _control = character.lunging
-					 Set_sprite(s_slima_dash_foward,1,0)
-					 str_state = "ground slide";
-				     state = slima.slide					
-					}
-		        }
+  if key_horizontal==0
+    {
+		str_state = "idle"
+	 Set_sprite(s_slima_idle,1,0)	
+	 if key_horizontal != 0 && key_horizontal == image_xscale 
+	   { str_state = "run" } 			  	   
+    }	 
 
-	  }
+
+     else      
+         {	//>> si me estoy moviendo 
+	    str_state = "run"  
+		var _frame_loop = 2;
+	    Set_sprite(s_slima_run,1,image_index) 
+		if Animation_end() {image_index = _frame_loop}			
+				///===// TURN	
+		if image_xscale != key_horizontal {Set_sprite(s_slima_turn,1,0) state = slima.turn }	
+					
+				///===// DASH	
+					
+		if key_dash //>> si estoy corriendo y presiono la tecla para dashear 	
+				{
+				move_distance_remaining = distance_dash if image_xscale == 1 {direction = 0}else direction = 180; 
+				_control = character.lunging
+				Set_sprite(s_slima_dash_foward,1,0)
+				str_state = "ground slide";
+				 state = slima.slide					
+				}
+		   
+
+	      }
 	 
 
 
@@ -173,6 +176,7 @@ if str_state == "crouch up" //>> levantarse
 		 if move_distance_remaining <= 0 
 			 {
 			   hsp = 0;
+			   jumped = true;
 			   _control = character.can_move
 			   if on_ground {
 						if key_down  

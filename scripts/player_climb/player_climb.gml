@@ -187,6 +187,8 @@ function Player_climb_roof()
 {
 var key_roof = key_right -key_left
 
+
+
 if str_state == "pre roof" 
   {
    Set_sprite(s_slima_roof_grab,1,0)
@@ -292,7 +294,8 @@ if str_state == "ground slide"
 				} else 
 				  {
 					  _control = character.can_move
-					if key_move != 0 
+					  jumped = true;//>>> evito que salte al finalizar el dash
+					if key_move != 0 					
 					{
 					   Set_sprite(s_slima_jump_foward,1,3)	              
 		               state = slima.Hjump

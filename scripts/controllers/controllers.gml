@@ -17,6 +17,6 @@ key_down  = Kc(vk_down);
 key_jump  = kcp(ord("A"));
 key_jumpR = Kcr(ord("A"));
 
-key_dash  = kcp(ord("C"));
-key_attack= kcp(ord("X"));
+key_dash  = kcp(ord("X"));
+key_attack= kcp(ord("Z"));
 }

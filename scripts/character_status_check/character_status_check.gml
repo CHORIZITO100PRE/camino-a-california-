@@ -224,6 +224,17 @@ if fun_collision_roof(o_roof)
 	    	     vsp = jump_speed
 				 str_state = "roof jump"							
 	            }
+	if key_down
+      {	   	   
+      _control = character.can_move  
+	  y += 1;
+	  Set_sprite(s_slima_jump_up,1,5)
+	  state = slima.Vjump
+      
+      }
+			
+				
+				
 	} else {
 		  vsp += _gravity	
 		  
