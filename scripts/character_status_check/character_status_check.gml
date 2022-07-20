@@ -45,7 +45,7 @@ if !on_ground {
     if jump_coyote > 0 {
 	   jump_coyote -=1;
 	   if jumped = false {
-	      if key_jump  { //>> si presiono saltar y no estoy sobre una plataforma semi solida
+	      if key_jump  { 
 		     vsp = jump_speed;
 			 vsp_frac = 0;
 			 jumped = true;
@@ -198,11 +198,13 @@ if fun_collision_roof(o_roof)
 		    }
 	hsp = clamp(hsp,-1,1)	
 	
-	       if key_jump && fun_collision_roof(o_roof) //>> control de saltos en la liana 
+	    /*   if key_jump && fun_collision_roof(o_roof) //>> control de saltos en la liana 
 	            {
 	    	     vsp = jump_speed
 				 str_state = "roof jump"							
-	            }
+	            }*/
+					
+				
 	if key_down
       {	   	   
       _control = character.can_move  
@@ -242,6 +244,22 @@ if !fun_collision_roof(o_roof) && str_state != "roof jump"
 	Set_sprite(s_slima_jump_foward,1,2)
 	state = slima.Hjump
 	}
+
+////=== mecanica de salto en la liana ===///
+if key_jump  {jump_buffer = jump_buffer_max}
+     if jump_buffer > 0 {
+	      jump_buffer -=1; 
+		     if fun_collision_roof(o_roof) 
+			              {
+						   vsp = jump_speed;
+						   str_state = "roof jump"					   
+						   jump_buffer = 0;
+						   jumped = true;
+		                  }
+	                    }	
+
+
+
 
 
 }

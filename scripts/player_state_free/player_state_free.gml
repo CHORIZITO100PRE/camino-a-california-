@@ -30,13 +30,51 @@ if on_ground {
 		var _frame_loop = 2;
 	    Set_sprite(s_slima_run,1,image_index) 
 		if Animation_end() {image_index = _frame_loop}			
-			
+		
 			
 	if key_horizontal !=0
 	{
+	  if image_xscale == -1 && key_right// || image_xscale == 1 && key_left 
+		  {
+		      
+			  switch(round(image_index))
+			  {
+			  case 2: s_run_turn_left = s_slima_run_turn_left0 break;
+			  case 5: s_run_turn_left = s_slima_run_turn_left1  break;
+			  case 8: s_run_turn_left = s_slima_run_turn_left2  break;			  
+			  }			  
+			  str_state = "turn run left" 
+			  state = slima.turnR
+		  }
+		 else 
+	  if image_xscale == 1 && key_left 
+		  {
+		      switch(round(image_index))
+			  {
+			  case 2: s_run_turn_right = s_slima_run_turn_right0 break;
+			  case 5: s_run_turn_right = s_slima_run_turn_right1  break;
+			  case 8: s_run_turn_right = s_slima_run_turn_right2  break;			  
+			  }
+			  str_state = "turn run right" 
+			  state = slima.turnR
+		  }
+	  
+	  
+	} else {
+			   if image_xscale == -1 && !key_left  || image_xscale == 1 && !key_right
+			   {	   
+				  Set_sprite(s_slima_idle,1,0)
+				  state = slima.idle	   
+			   }
+           }
+		
+		
+/* recovvery
+if key_horizontal !=0
+	{
 	  if image_xscale == -1 && key_right || image_xscale == 1 && key_left
 	  {
-	      Set_sprite(s_slima_run_turn,1,0)
+	      Set_sprite(s_slima_run_turn_left0,1,0)
 		  state = slima.turnR
 	  }
 	} else {
@@ -47,18 +85,7 @@ if on_ground {
 			   }
            }
 		
-		
-	/*	if (key_horizontal != 0) && image_xscale != key_horizontal
-		{
-		  Set_sprite(s_slima_run_turn,1,0)
-		  state = slima.turnR
-		}
-		
-		if (key_horizontal == 0) && image_xscale == key_horizontal
-		{
-		Set_sprite(s_slima_idle,1,0)
-		state = slima.idle
-		}*/
+*/
 		  
 		
 				///===// DASH	
@@ -253,15 +280,29 @@ if on_ground {
 
 function player_turnR()
 {
- str_state =  "turn run";
- Set_sprite(s_slima_run_turn,1,0)
-      if Animation_end() {
-		               if image_xscale == 1 {image_xscale = -1; x += 5} else {image_xscale = 1; x -= 5 }//6 
-					   
-					   Set_sprite(s_slima_run,1,image_index) state = slima.run
+ if str_state ==  "turn run left"
+	 {
+
+	    Set_sprite(s_run_turn_left,1,0)	  
+	      if Animation_end() {
+			               if image_xscale == -1 {image_xscale = 1; x -= 5} //else {image_xscale = 1; x -= 5 }//6 					   
+						   Set_sprite(s_slima_run,1,image_index) state = slima.run
 						 
-                         }
+	                         }
+	 }	
+	 
+if str_state == "turn run right"
+   {
+	  Set_sprite(s_run_turn_right,1,0) 	
+	      if Animation_end() {
+			               if image_xscale == 1 {image_xscale = -1; x += 5} //else {image_xscale = 1; x -= 5 }//6 					   
+						   Set_sprite(s_slima_run,1,image_index) state = slima.run
 						 
+	                         }
+   }
+
+
+	 
 	if !on_ground {
        if hsp == 0 { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump;} else 
 	               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}

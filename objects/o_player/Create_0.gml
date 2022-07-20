@@ -36,11 +36,18 @@ distance_dash = 110;
 
 ///=== GRAVEDAD ===///
 _gravity   = 0.28;
-_gravity_c = 0.26;
+//_gravity_c = 0.26;
+
+
 
 ///=== VERIFICAR COLISION CON EL PISO ===///
 on_ground = false;
 on_ice = false;
+
+///=== ALMACENAR INDEX DE DARSE VUELTA ===///
+s_run_turn_right = s_slima_run_turn_right0
+s_run_turn_left  = s_slima_run_turn_left0
+
 
 ///=== MAQUINA DE ESTADOS PARA CONTROLAR LOS MOVIMIENTOS ===///
 enum character 
