@@ -6,7 +6,7 @@ switch(state)
 case slima.Lturn :  
 if image_xscale == 1 image_xscale = -1 
                 else image_xscale = 1	 
-                     state = slima.free;
+                     state = slima.run;
  break;
  
  

@@ -4,7 +4,7 @@ function Scr_free_character()
 	key_horizontal = key_right - key_left
 
 ///=== CALCULAR MOVIMIENTO HORIZONTAL ===/// 
-if state != slima.crouched && state != slima.slide  //>> si no estoy agachado
+if state != slima.crouched && state != slima.slide  //>> si no estoy agachado >> apra no moverme 
   {
 #region ///>>> movimento 
 	if on_ground {				 
@@ -37,9 +37,8 @@ if state != slima.crouched && state != slima.slide  //>> si no estoy agachado
 		       vsp = clamp(vsp,-vsp_max_final,vsp_max_final)
 		} else {vsp = 0; vsp_frac = 0;}
 
-	
-//if state != slima.crouched  //>> si no estoy agachado
-//{
+
+
 ///=== COYOTE TIME ===///
 
 if !on_ground {
@@ -75,12 +74,12 @@ if jump_buffer > 0 {
 
 ///===// SALTO VARIABLE 
 if  key_jumpR && jumped //&& state != slima.crouch
-	 {//si etoy saltando 
-        if vsp < 0 { vsp  = max(vsp,jump_speed/2) vsp_frac = 0; }	
+	    {//si etoy saltando 
+        if vsp < 0 { vsp  = max(vsp,jump_speed/2)  }	
 		}
 
 
-//}
+
 ///===// ENTRADA A LA ESCALERA 		
 
 
@@ -130,12 +129,12 @@ if on_ground && !on_ladder //>>> si estoy en el piso y no estoy dentro de la esc
   {
    state = slima.crouched;  
    str_state = "pre crouch"; 
-  } else if key_jump 
-    {	 	    
-		  Set_sprite(s_slima_jump_up,1,0)
-		  state = slima.Vjump		
-	}
+  } 
 }
+
+  	  	 
+
+
 
 ///===// ENTRAR A ESTADO TREPAR EL TECHO //====///
 
@@ -146,27 +145,7 @@ state = slima.climb_roof
 str_state = "pre roof"
 }
 
-//>>> entrada adashear 
-/*
- if key_dash 
-	   {		   
-	     move_distance_remaining = distance_dash
-if on_ground {	//>> si estoy en el piso 	 
-	          if key_down && (str_state == "crouch idle") {if (image_xscale == 1) direction = 0 else direction = 180;} //>>> dash agachado
-			  if  (image_xscale == 1) direction = 0 else direction = 180; //>>> dash parado			  	  
-		          } else { //>> si estoy en el aire 
-				     if !key_down && !key_up 
-					      {
-				           if (image_xscale == 1) direction = 0 else direction = 180; //>>> dash horizontal en el aire 
-						  } else if key_up 
-						    {direction = 90;} //>>> dash arriba desde el aire 
-						    	else if key_down
-							    {direction = 270} //>>> dash abajo desde el aire 
-			        }			          	 
-         _control = character.lunging;
-	    }
 
-*/
 
 
 	 
@@ -261,7 +240,7 @@ if !fun_collision_roof(o_roof) && str_state != "roof jump"
     {
 	_control = character.can_move 
 	Set_sprite(s_slima_jump_foward,1,2)
-	state = slima.free 
+	state = slima.Hjump
 	}
 
 

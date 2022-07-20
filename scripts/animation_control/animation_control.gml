@@ -5,9 +5,11 @@ on_ground = fun_on_ground() //>>> verificar el piso
 
 	 switch(state)
 	 {
-	  case slima.free:       Player_free();         break; //>> movimiento libre 
+	  case slima.idle:       player_idle();         break; //>> estado reposo
+	  case slima.run:        player_run();          break; //>> estado de movimiento
 	  case slima.crouched:   player_crouched();     break; //>> estado agachado 
 	  case slima.turn:       Player_turn();         break; //>> cambio de direccion normal
+	  case slima.turnR:      player_turnR();        break; //>> cambio de direccion corriendo
 	  case slima.Lturn:      player_Lturn();        break; //>> cambio de direccion en movimiento 
 	  case slima.Vjump:      Player_Vjump();        break; //>> salto vertical 
 	  case slima.Hjump:      Player_Hjump();        break; //>> salto horizontal
@@ -16,7 +18,7 @@ on_ground = fun_on_ground() //>>> verificar el piso
 	  case slima.climb :     Player_climb();        break; //>> mecanicas de escalera 
 	  case slima.ledge_grab: player_ledge_grab();   break; //>> mecanica en la repisa 
 	  case slima.climb_roof: Player_climb_roof();   break; //>> mecanicas de agarre en el techo 
-	  case slima.slide :     player_slide();        break;
+	  case slima.slide :     player_slide();        break; //>> estado para deslizarse 
 	 }
 
 

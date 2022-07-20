@@ -39,7 +39,15 @@ if key_up {
 				  }
 			   }
            } 		   
-		   
+
+///===// salir de la escalera 
+if key_jump
+ {
+  _control = character.can_move
+  Set_sprite(s_slima_jump_up,1,image_index)
+  state = slima.Vjump
+ }
+
 		   
    }   
    
@@ -61,7 +69,7 @@ if (str_state == "ladder get down") //>>> comenzar a bajar la escalera
 	 hsp = 0;
 	 hsp_frac = 0;
 	Set_sprite(s_slima_stair_grab_down,1,0)
-	if Animation_end() {  _control = character.can_move  Set_sprite(s_slima_idle,1,0) state = slima.free; }
+	if Animation_end() {  _control = character.can_move  Set_sprite(s_slima_idle,1,0) state = slima.idle }
    } 
    
 if (str_state == "ladder get up") //>>> comenzar a subir la escalera 
@@ -73,7 +81,7 @@ if (str_state == "ladder get up") //>>> comenzar a subir la escalera
 		    { 
 				_control = character.can_move;
 				 Set_sprite(s_slima_idle,1,1)
-				  state = slima.free;
+				  state = slima.idle;
 				 y = Ladder.bbox_top -35;
 			}		
    }      
@@ -174,8 +182,8 @@ if str_state == "climb ledge"
 		  y--
 		  Set_sprite(s_slima_idle,1,0)
 		  _control = character.can_move;
-		  state = slima.free
-		  str_state = "idle"
+		  state = slima.idle
+		  
 			          
              }
       }
@@ -290,7 +298,7 @@ if str_state == "ground slide"
 			    //   {
 				if on_ground
 				{
-					if key_move != 0 { Set_sprite(s_slima_run,1,2) state = slima.free;} else {str_state = "slide stop"}
+					if key_move != 0 { Set_sprite(s_slima_run,1,2) state = slima.run} else {str_state = "slide stop"}
 				} else 
 				  {
 					  _control = character.can_move
@@ -334,8 +342,16 @@ if str_state == "air slide"
  
 if str_state == "slide stop" 
   {
-   Set_sprite(s_slima_stop,1,0)
-       if Animation_end() {state = slima.free;}
+	if on_ground 
+	  {
+       Set_sprite(s_slima_stop,1,0)
+           if Animation_end() {state = slima.idle;}
+	   
+	  }else 
+	  {  
+	    if hsp == 0   { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump;} else 
+	               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
+	  }
   }
 
 

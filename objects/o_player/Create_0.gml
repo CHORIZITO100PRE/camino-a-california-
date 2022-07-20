@@ -53,13 +53,13 @@ _control = character.can_move;
 ///=== MAQUINA DE ESTADOS PARA CONTROL DE LAS ANIMACIONES ===///
 enum slima
 {
-free,crouched,
+idle,run,crouched,//free,
 Vjump,Hjump,
 Vlanded,Hlanded,
-turn,Lturn,
+turn,Lturn,turnR,
 climb,ledge_grab,climb_roof,
 slide
 }
 
-state = slima.free;
+state = slima.idle;
 str_state = "";

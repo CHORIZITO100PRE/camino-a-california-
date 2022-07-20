@@ -1,29 +1,66 @@
 
-function Player_free()
-{	
-
-if on_ground//>> si estoy en el piso 
-  {
-    
-	
-  if key_horizontal==0
+function  player_idle()
+{
+ str_state ="idle"
+ Set_sprite(s_slima_idle,1,0)
+ 
+ if on_ground 
+ {
+	 if (key_horizontal != 0)//>> si me muevo
+	  {
+		if image_xscale != key_horizontal  {state = slima.turn}  else
+       state = slima.run;
+	   
+	  }
+ 
+	  
+ } else 
     {
-		str_state = "idle"
-	 Set_sprite(s_slima_idle,1,0)	
-	 if key_horizontal != 0 && key_horizontal == image_xscale 
-	   { str_state = "run" } 			  	   
-    }	 
+     if hsp == 0   { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump;} else 
+	               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
+    }
+ 
+ 
+}
 
-
-     else      
-         {	//>> si me estoy moviendo 
-	    str_state = "run"  
+function  player_run()
+{
+if on_ground {
+  str_state = "run"  
 		var _frame_loop = 2;
 	    Set_sprite(s_slima_run,1,image_index) 
 		if Animation_end() {image_index = _frame_loop}			
-				///===// TURN	
-		if image_xscale != key_horizontal {Set_sprite(s_slima_turn,1,0) state = slima.turn }	
-					
+			
+			
+	if key_horizontal !=0
+	{
+	  if image_xscale == -1 && key_right || image_xscale == 1 && key_left
+	  {
+	      Set_sprite(s_slima_run_turn,1,0)
+		  state = slima.turnR
+	  }
+	} else {
+			   if image_xscale == -1 && !key_left  || image_xscale == 1 && !key_right
+			   {	   
+				  Set_sprite(s_slima_idle,1,0)
+				  state = slima.idle	   
+			   }
+           }
+		
+		
+	/*	if (key_horizontal != 0) && image_xscale != key_horizontal
+		{
+		  Set_sprite(s_slima_run_turn,1,0)
+		  state = slima.turnR
+		}
+		
+		if (key_horizontal == 0) && image_xscale == key_horizontal
+		{
+		Set_sprite(s_slima_idle,1,0)
+		state = slima.idle
+		}*/
+		  
+		
 				///===// DASH	
 					
 		if key_dash //>> si estoy corriendo y presiono la tecla para dashear 	
@@ -34,26 +71,14 @@ if on_ground//>> si estoy en el piso
 				str_state = "ground slide";
 				 state = slima.slide					
 				}
-		   
-
-	      }
-	 
-
-
-
-	
-  } else //>> si estoy en el aire 
-     {
-	   if hsp == 0 { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump; } else 
-	               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
-     }
-  
-  
-
-
-
-
-
+		    }
+		     else
+		   {
+		    if hsp == 0    { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump;} else 
+			               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
+		   }
+ 
+ 
 }
 
 function player_crouched()
@@ -82,22 +107,22 @@ if str_state == "pre crouch"  //>> comenzar a agacharse
 		 var moveH = key_right - key_left
 		 if moveH != 0 && !key_down
 		 {
-			 state = slima.free;
+			 state = slima.idle;
 		 }
 		 
 	 if key_down && place_meeting(x,y+1,o_platform_one_way) //>>> caer de la plataforma 
 	  {
 		   _control = character.not_move	
 		  if key_jump 
-		  {
-			 
+		  {			 
 		  // y = y+4
 		    y = y + 11 //>> teleport para que concuerden las posiciones de las animaciones 
 		   _control = character.can_move
 		   Set_sprite(s_slima_jump_up,1,4)
 		   state = slima.Vjump
 		  }
-	  }   	  	 
+	  }  
+	
 		 
 		 
      }
@@ -158,7 +183,7 @@ if str_state == "crouch up" //>> levantarse
 	if Animation_end() 
 	   { 
 		_control = character.can_move 
-		state = slima.free; 
+		state = slima.idle; 
 		} //>> si la animacion termina me puedo mover
   }
   
@@ -186,7 +211,7 @@ if str_state == "crouch up" //>> levantarse
 							 } else 
 							  {
 							   Set_sprite(s_slima_slide_recovery,1,1)
-							   if Animation_end() {  state = slima.free str_state = "idle" }
+							   if Animation_end() {  state = slima.idle }
 							  }
 			                } else 
 							  {
@@ -215,15 +240,34 @@ function Player_turn()
     var moveH = key_right - key_left;
 	if moveH != 0  { image_xscale = moveH; }
 if on_ground {	
-		    if Animation_end() { Set_sprite(s_slima_idle,1,0) state = slima.free;}
+		    if Animation_end() { Set_sprite(s_slima_idle,1,0) state = slima.idle}
              } else 
 			   { 
 			    if hsp == 0 { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump; } else 
 	                        { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
 			   }
-	
+			   
+
+  
 }
 
+function player_turnR()
+{
+ str_state =  "turn run";
+ Set_sprite(s_slima_run_turn,1,0)
+      if Animation_end() {
+		               if image_xscale == 1 {image_xscale = -1; x += 5} else {image_xscale = 1; x -= 5 }//6 
+					   
+					   Set_sprite(s_slima_run,1,image_index) state = slima.run
+						 
+                         }
+						 
+	if !on_ground {
+       if hsp == 0 { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump;} else 
+	               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
+                  }					 
+						 
+}
 function player_Lturn()
 {
 
@@ -345,14 +389,18 @@ function Player_Vlanded()
 						
 		
 		   if key_horizontal != 0 
-		     { if (key_right && image_xscale ==1) || (key_left && image_xscale == -1) { state = slima.free;}
+		     { if (key_right && image_xscale ==1) || (key_left && image_xscale == -1) { state = slima.idle}
 			    else state = slima.turn}
-		    	   else { if Animation_end()  state = slima.free  } 
+		    	   else { if Animation_end()  state = slima.idle } 
 	  } else //>> si estoy en el aire 
 	  {
 		   if hsp == 0 { Set_sprite(s_slima_jump_up,1,0)     state = slima.Vjump; } else 
 		               { Set_sprite(s_slima_jump_foward,1,0) state = slima.Hjump;}
 	  }
+	  
+	  
+	  
+	  
 
 }
 
@@ -366,9 +414,9 @@ if on_ground
 	  if (key_horizontal != 0)
 	  {
 	    if image_xscale == 1 && key_right || image_xscale == -1 && key_left
-		{if Animation_end()  state = slima.free} else { state = slima.turn}	    	
+		{if Animation_end()  state = slima.run} else { state = slima.turn}	    	
 	  } else { //>>> si no estoy presionando las teclas horizontales 
-		      state = slima.free
+		      state = slima.idle
 	         }
 			 
 	if key_dash //>> si estoy corriendo y presiono la tecla para dashear 	

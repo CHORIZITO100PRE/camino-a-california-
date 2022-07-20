@@ -68,7 +68,7 @@
     "spriteId": {"name":"s_slima_run","path":"sprites/s_slima_run/s_slima_run.yy",},
     "timeUnits": 1,
     "playback": 1,
-    "playbackSpeed": 27.0,
+    "playbackSpeed": 26.0,
     "playbackSpeedType": 0,
     "autoRecord": true,
     "volume": 1.0,

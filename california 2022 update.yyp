@@ -119,6 +119,7 @@
     {"id":{"name":"s_slima_stair_grab","path":"sprites/s_slima_stair_grab/s_slima_stair_grab.yy",},"order":1,},
     {"id":{"name":"s_slima_sword2","path":"sprites/s_slima_sword2/s_slima_sword2.yy",},"order":12,},
     {"id":{"name":"s_slima_sword_dash_down","path":"sprites/s_slima_sword_dash_down/s_slima_sword_dash_down.yy",},"order":2,},
+    {"id":{"name":"o_game","path":"objects/o_game/o_game.yy",},"order":3,},
     {"id":{"name":"s_slima_crouch_gunchange","path":"sprites/s_slima_crouch_gunchange/s_slima_crouch_gunchange.yy",},"order":3,},
     {"id":{"name":"Store_frac","path":"scripts/Store_frac/Store_frac.yy",},"order":1,},
     {"id":{"name":"s_slima_crouch_turn","path":"sprites/s_slima_crouch_turn/s_slima_crouch_turn.yy",},"order":5,},
